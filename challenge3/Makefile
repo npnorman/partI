@@ -3,3 +3,6 @@ helloWorld:
 
 run: helloWorld
 	./helloWorld
+
+clean:
+	rm helloWorld
