@@ -15,6 +15,7 @@ typedef struct node {
 struct node* createNode(int data);
 void insert(struct node* head_node, struct node* new_node);
 int find(struct node* head_node, int data);
+void delete(struct node* head_node, int data);
 
 //make some pointers
 struct node* head = NULL;
@@ -38,6 +39,11 @@ int main() {
     printf("Find 7: %d\n", find(head, 7));
     printf("Find 8: %d\n", find(head, 8));
     printf("Find 2: %d\n", find(head, 2));
+
+    free(head->next->next);
+    free(head->next);
+    free(head);
+    free(tail);
 
     return(0);
 } //end main
@@ -77,4 +83,8 @@ int find(struct node* head_node, int data) {
         //it does have a next
         find(head_node->next, data);
     }
+}
+
+void delete(struct node* head_node, int data) {
+    
 }
