@@ -12,7 +12,7 @@ typedef struct node {
 
 //function prototypes
 //insert, find, and delete the list
-struct node createNode(int data);
+struct node* createNode(int data);
 void insert(int data);
 
 //make some pointers
@@ -25,17 +25,22 @@ int main() {
 
     //test linked list
     //create a node to store in the head
-    //head->data = 7;
-    //printf("%d", head->data);
+    head = createNode(7);
+    printf("%d\n", head->data);
 
     return(0);
 } //end main
 
-void insert(int data) {
-
+struct node* createNode(int data) {
     //create a new node containing the data
     struct node* new_node = (struct node*)malloc(sizeof(struct node));
     new_node->data = data;
     new_node->next = NULL;
     new_node->prev = NULL;
+
+    return new_node;
+}
+
+void insert(int data) {
+
 }
