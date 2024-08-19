@@ -13,7 +13,7 @@ typedef struct node {
 //function prototypes
 //insert, find, and delete the list
 struct node* createNode(int data);
-void insert(int data);
+void insert(struct node*, struct node*);
 
 //make some pointers
 struct node* head = NULL;
@@ -26,7 +26,15 @@ int main() {
     //test linked list
     //create a node to store in the head
     head = createNode(7);
-    printf("%d\n", head->data);
+    printf("creating node\n");
+    insert(head, createNode(8));
+
+    printf("Head: %d\n", head->data);
+    printf("Head->next: %d\n", head->next->data);
+
+    insert(head, createNode(9));
+
+    printf("Head->next: %d\n", head->next->next->data);
 
     return(0);
 } //end main
@@ -41,6 +49,15 @@ struct node* createNode(int data) {
     return new_node;
 }
 
-void insert(int data) {
+void insert(struct node* head_node, struct node* new_node) {
 
+    //start at node,
+    //if node next is null, base case, insert
+    if (head_node->next == NULL) {
+        //base case
+        head_node->next = new_node;
+    } else {
+        //else node is not null, recurse
+        insert(head_node->next, new_node);
+    }
 }
