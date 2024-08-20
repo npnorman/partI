@@ -64,7 +64,10 @@ void insert(struct node* head_node, struct node* new_node) {
     //if node next is null, base case, insert
     if (head_node->next == NULL) {
         //base case
+        //current node's next = new
+        //new node's previous = current
         head_node->next = new_node;
+        new_node->prev = head_node;
     } else {
         //else node is not null, recurse
         insert(head_node->next, new_node);
@@ -78,7 +81,7 @@ int find(struct node* head_node, int data) {
         return -1;
     } else if (head_node->data == data) {
         //no next, base case
-        return head_node->data;
+        return 0;
     } else {
         //it does have a next
         find(head_node->next, data);
@@ -86,5 +89,20 @@ int find(struct node* head_node, int data) {
 }
 
 void delete(struct node* head_node, int data) {
-    
+
+    //find node with data to delete
+
+    //set the next previous to current previous
+    if (head_node->next != NULL) {
+        head_node->next->prev = head_node->prev;
+    }
+    //set the previous next to current next
+    if (head_node->prev != NULL) {
+        head_node->prev->next = head_node->next;
+    }
+
+    head_node->next = NULL;
+    head_node->prev = NULL;
+
+    free(head_node);
 }
