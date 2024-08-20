@@ -15,6 +15,7 @@ typedef struct node {
 struct node* createNode(int data);
 void insert(struct node* head_node, struct node* new_node);
 int find(struct node* head_node, int data);
+struct node* findNode(struct node* head_node, int data);
 void delete(struct node* head_node, int data);
 
 //make some pointers
@@ -33,12 +34,18 @@ int main() {
     printf("Head: %d\n", head->data);
     printf("Head->next: %d\n", head->next->data);
     insert(head, createNode(9));
-    printf("Head->next: %d\n", head->next->next->data);
+    printf("Head->next->next: %d\n", head->next->next->data);
 
     //find the nodes
     printf("Find 7: %d\n", find(head, 7));
     printf("Find 8: %d\n", find(head, 8));
     printf("Find 2: %d\n", find(head, 2));
+
+    //delete a node
+    delete(head, 8);
+    printf("deleting 8\n");
+    printf("Head->next: %d\n", head->next->data);
+
 
     free(head->next->next);
     free(head->next);
@@ -88,21 +95,36 @@ int find(struct node* head_node, int data) {
     }
 }
 
+struct node* findNode(struct node* head_node, int data) {
+
+    if (head_node == NULL) {
+        //couldnt find
+        return createNode(0);
+    } else if (head_node->data == data) {
+        //no next, base case
+        return head_node;
+    } else {
+        //it does have a next
+        findNode(head_node->next, data);
+    }
+}
+
 void delete(struct node* head_node, int data) {
 
     //find node with data to delete
+    struct node* current_node = findNode(head_node, data);
 
     //set the next previous to current previous
-    if (head_node->next != NULL) {
-        head_node->next->prev = head_node->prev;
+    if (current_node->next != NULL) {
+        current_node->next->prev = current_node->prev;
     }
     //set the previous next to current next
-    if (head_node->prev != NULL) {
-        head_node->prev->next = head_node->next;
+    if (current_node->prev != NULL) {
+        current_node->prev->next = current_node->next;
     }
 
-    head_node->next = NULL;
-    head_node->prev = NULL;
+    current_node->next = NULL;
+    current_node->prev = NULL;
 
-    free(head_node);
+    free(current_node);
 }
